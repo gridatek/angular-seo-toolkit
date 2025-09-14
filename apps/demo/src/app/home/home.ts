@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { StkSeoImageDirective, StkSeo, StkStructuredData } from 'ngx-seo-toolkit';
+import { StkSeoImage, StkSeo, StkStructuredData } from 'ngx-seo-toolkit';
 
 @Component({
   selector: 'app-home',
-  imports: [StkSeoImageDirective, RouterModule],
+  imports: [StkSeoImage, RouterModule],
   template: `
  <main>
       <nav>

@@ -5,7 +5,7 @@ import { isPlatformBrowser } from '@angular/common';
   selector: '[stkSeoImage]',
   standalone: true
 })
-export class StkSeoImageDirective implements OnInit {
+export class StkSeoImage implements OnInit {
   @Input() stkSeoImage = '';
   @Input() alt = '';
   @Input() loading: 'lazy' | 'eager' = 'lazy';

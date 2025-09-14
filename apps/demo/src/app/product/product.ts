@@ -1,10 +1,10 @@
 import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { StkSeo, StkStructuredData, StkSeoImageDirective } from 'ngx-seo-toolkit';
+import { StkSeo, StkStructuredData, StkSeoImage } from 'ngx-seo-toolkit';
 
 @Component({
   selector: 'app-product',
-  imports: [StkSeoImageDirective],
+  imports: [StkSeoImage],
   template: `
     <div itemscope itemtype="https://schema.org/Product">
       <h1 itemprop="name">{{ product.name }}</h1>

@@ -60,12 +60,12 @@ bootstrapApplication(AppComponent, {
 
 ```typescript
 import { Component, OnInit, inject } from '@angular/core';
-import { StkSeo, StkSeoImageDirective } from 'ngx-seo-toolkit';
+import { StkSeo, StkSeoImage } from 'ngx-seo-toolkit';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [StkSeoImageDirective],
+  imports: [StkSeoImage],
   template: `
     <main>
       <h1>Welcome to My Website</h1>
@@ -417,7 +417,7 @@ bootstrapApplication(AppComponent, {
 import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { StkSeo, StkStructuredData, StkSeoImageDirective } from 'angular-seo-helpers';
+import { StkSeo, StkStructuredData, StkSeoImage } from 'angular-seo-helpers';
 
 interface BlogPost {
   title: string;
@@ -434,7 +434,7 @@ interface BlogPost {
 @Component({
   selector: 'app-blog-post',
   standalone: true,
-  imports: [StkSeoImageDirective],
+  imports: [StkSeoImage],
   template: `
     <article>
       <header>
@@ -547,7 +547,7 @@ export class BlogPostComponent implements OnInit {
 ```typescript
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { StkSeo, StkStructuredData, StkSeoImageDirective } from 'angular-seo-helpers';
+import { StkSeo, StkStructuredData, StkSeoImage } from 'angular-seo-helpers';
 
 interface Product {
   id: string;
@@ -573,7 +573,7 @@ interface Review {
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [StkSeoImageDirective],
+  imports: [StkSeoImage],
   template: `
     <div itemscope itemtype="https://schema.org/Product">
       <h1 itemprop="name">{{ product()?.name }}</h1>
