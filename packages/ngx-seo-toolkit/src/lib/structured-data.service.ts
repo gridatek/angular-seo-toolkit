@@ -1,7 +1,7 @@
 import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { isPlatformBrowser } from '@angular/common';
-import { StructuredDataSchema } from '../interfaces/seo.interfaces';
+import { StructuredDataSchema } from './seo.interfaces';
 
 @Injectable({
   providedIn: 'root'

@@ -6,8 +6,8 @@ import { filter, takeUntilDestroyed } from 'rxjs/operators';
 import { DestroyRef } from '@angular/core';
 import { MetaService } from './meta.service';
 import { StructuredDataService } from './structured-data.service';
-import { SeoConfig } from '../interfaces/seo.interfaces';
-import { SEO_DEFAULT_CONFIG } from '../tokens/seo.tokens';
+import { SeoConfig } from './seo.interfaces';
+import { SEO_DEFAULT_CONFIG } from './seo.tokens';
 
 @Injectable({
   providedIn: 'root'

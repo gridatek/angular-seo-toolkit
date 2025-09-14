@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { SeoService } from '../services/seo.service';
-import { SeoConfig } from '../interfaces/seo.interfaces';
+import { SeoService } from './seo.service';
+import { SeoConfig } from './seo.interfaces';
 
 export const seoGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,

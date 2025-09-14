@@ -1,9 +1,9 @@
 import { Provider, EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
-import { SeoDefaultConfig } from '../interfaces/seo.interfaces';
-import { SEO_DEFAULT_CONFIG } from '../tokens/seo.tokens';
-import { SeoService } from '../services/seo.service';
-import { MetaService } from '../services/meta.service';
-import { StructuredDataService } from '../services/structured-data.service';
+import { SeoDefaultConfig } from './seo.interfaces';
+import { SEO_DEFAULT_CONFIG } from './seo.tokens';
+import { SeoService } from './seo.service';
+import { MetaService } from './meta.service';
+import { StructuredDataService } from './structured-data.service';
 
 export type SeoProvidersConfig = SeoDefaultConfig
 
