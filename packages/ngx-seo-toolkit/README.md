@@ -38,14 +38,14 @@ Set up the SEO toolkit in your main application bootstrap:
 ```typescript
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
-import { provideStkSeoHelpers } from 'ngx-seo-toolkit';
+import { provideStkConfig } from 'ngx-seo-toolkit';
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
-    provideStkSeoHelpers({
+    provideStkConfig({
       siteName: 'My Awesome Website',
       titleTemplate: '%s | My Website',
       defaultAuthor: 'John Doe',
@@ -382,18 +382,18 @@ export const routes: Routes = [
 
 ## Provider Configuration
 
-### provideStkSeoHelpers()
+### provideStkConfig()
 
 Modern environment providers for Angular 17+.
 
 ```typescript
 // main.ts
-import { provideStkSeoHelpers } from 'ngx-seo-toolkit';
+import { provideStkConfig } from 'ngx-seo-toolkit';
 
 bootstrapApplication(AppComponent, {
   providers: [
     // ... other providers
-    provideStkSeoHelpers({
+    provideStkConfig({
       siteName: 'My Website',
       titleTemplate: '%s | My Website', // %s will be replaced with page title
       defaultTitle: 'My Website',
@@ -773,11 +773,11 @@ export class AppModule {}
 ### After (Standalone)
 ```typescript
 // main.ts
-import { provideStkSeoHelpers } from 'ngx-seo-toolkit';
+import { provideStkConfig } from 'ngx-seo-toolkit';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideStkSeoHelpers({
+    provideStkConfig({
       siteName: 'My Website'
     })
   ]
@@ -826,7 +826,7 @@ npx nx e2e demo-e2e
 ```typescript
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { provideStkSeoHelpers, StkSeoService } from 'ngx-seo-toolkit';
+import { provideStkConfig, StkSeoService } from 'ngx-seo-toolkit';
 
 describe('StkSeoService', () => {
   let service: StkSeoService;
@@ -835,7 +835,7 @@ describe('StkSeoService', () => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
-        provideStkSeoHelpers({
+        provideStkConfig({
           siteName: 'Test Site',
           titleTemplate: '%s | Test'
         })
@@ -863,7 +863,7 @@ describe('StkSeoService', () => {
 4. **Control Flow**: Use modern `@if`, `@for` syntax in templates
 5. **Functional Guards**: Prefer `CanActivateFn` over class-based guards
 6. **Inject Function**: Use `inject()` in functional contexts
-7. **Environment Providers**: Use `provideStkSeoHelpers()` for better tree-shaking
+7. **Environment Providers**: Use `provideStkConfig()` for better tree-shaking
 
 ## 🏗️ Architecture & Design Principles
 

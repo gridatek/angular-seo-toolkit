@@ -7,7 +7,7 @@ import { StkStructuredDataService } from './structured-data.service';
 
 export type StkSeoProvidersConfig = SeoDefaultConfig
 
-export function provideStkSeoHelpers(config?: StkSeoProvidersConfig): EnvironmentProviders {
+export function provideStkConfig(config?: StkSeoProvidersConfig): EnvironmentProviders {
   const providers: Provider[] = [
     StkSeoService,
     StkMetaService,

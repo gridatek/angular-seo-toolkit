@@ -9,7 +9,7 @@ The ngx-seo-toolkit uses the "stk" prefix for all exported classes and directive
 - **Services**: `StkSeoService`, `StkMetaService`, `StkStructuredDataService`
 - **Directives**: `StkSeoImageDirective` (selector: `[stkSeoImage]`)
 - **Guards**: `stkSeoGuard`
-- **Providers**: `provideStkSeoHelpers()`
+- **Providers**: `provideStkConfig()`
 
 ## Project Structure
 

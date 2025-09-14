@@ -39,12 +39,12 @@ npm install ngx-seo-toolkit
 ```typescript
 // main.ts
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideStkSeoHelpers } from 'ngx-seo-toolkit';
+import { provideStkConfig } from 'ngx-seo-toolkit';
 import { AppComponent } from './app/app.component';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideStkSeoHelpers({
+    provideStkConfig({
       siteName: 'My Website',
       titleTemplate: '%s | My Website'
     })

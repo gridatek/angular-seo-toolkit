@@ -9,7 +9,7 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
-import { provideStkSeoHelpers } from 'ngx-seo-toolkit';
+import { provideStkConfig } from 'ngx-seo-toolkit';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes),
-     provideStkSeoHelpers({
+     provideStkConfig({
       siteName: 'My Awesome Website',
       titleTemplate: '%s | My Website',
       defaultAuthor: 'John Doe',
