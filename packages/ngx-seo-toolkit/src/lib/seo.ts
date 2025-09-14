@@ -3,10 +3,10 @@ import { DestroyRef, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { StkMeta } from './meta.service';
+import { StkMeta } from './meta';
 import { SeoConfig } from './seo.interfaces';
 import { SEO_DEFAULT_CONFIG } from './seo.tokens';
-import { StkStructuredData } from './structured-data.service';
+import { StkStructuredData } from './structured-data';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({

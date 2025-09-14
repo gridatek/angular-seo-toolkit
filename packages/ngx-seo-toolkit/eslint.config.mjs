@@ -26,7 +26,7 @@ export default [
         'warn',
         {
           type: 'attribute',
-          prefix: 'lib',
+          prefix: 'stk',
           style: 'camelCase',
         },
       ],
@@ -34,7 +34,7 @@ export default [
         'warn',
         {
           type: 'element',
-          prefix: 'lib',
+          prefix: 'stk',
           style: 'kebab-case',
         },
       ],

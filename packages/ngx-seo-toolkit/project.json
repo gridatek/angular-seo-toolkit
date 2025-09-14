@@ -2,7 +2,7 @@
   "name": "ngx-seo-toolkit",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/ngx-seo-toolkit/src",
-  "prefix": "lib",
+  "prefix": "stk",
   "projectType": "library",
   "release": {
     "version": {

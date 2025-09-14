@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { StkSeo } from './seo.service';
+import { StkSeo } from './seo';
 import { SeoConfig } from './seo.interfaces';
 
 export const stkSeoGuard: CanActivateFn = (
