@@ -1,5 +1,5 @@
 import { Provider, EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
-import { SeoDefaultConfig } from './seo.interfaces';
+import { SeoDefaultConfig } from './interfaces';
 import { SEO_DEFAULT_CONFIG } from './seo.tokens';
 import { StkSeo } from './seo';
 import { StkMeta } from './meta';

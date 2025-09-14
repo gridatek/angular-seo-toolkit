@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { SeoDefaultConfig } from './seo.interfaces';
+import { SeoDefaultConfig } from './interfaces';
 
 export const SEO_DEFAULT_CONFIG = new InjectionToken<SeoDefaultConfig>('SEO_DEFAULT_CONFIG', {
   providedIn: 'root',

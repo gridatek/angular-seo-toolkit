@@ -22,15 +22,13 @@ test.describe('SEO Tests', () => {
     const ogDescription = await page.getAttribute('meta[property="og:description"]', 'content');
     expect(ogDescription).toContain('The best website for all your needs');
 
-    const ogType = await page.getAttribute('meta[property="og:type"]', 'content');
-    expect(ogType).toBe('website');
+    await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'website');
 
     const ogImage = await page.getAttribute('meta[property="og:image"]', 'content');
     expect(ogImage).toContain('/assets/hero.jpg');
 
     // Check Twitter Card tags
-    const twitterCard = await page.getAttribute('meta[name="twitter:card"]', 'content');
-    expect(twitterCard).toBe('summary');
+    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary');
 
     const twitterTitle = await page.getAttribute('meta[name="twitter:title"]', 'content');
     expect(twitterTitle).toContain(/Welcome Home/);
@@ -54,8 +52,7 @@ test.describe('SEO Tests', () => {
     const ogTitle = await page.getAttribute('meta[property="og:title"]', 'content');
     expect(ogTitle).toContain(/Amazing Product - Buy Online/);
 
-    const ogType = await page.getAttribute('meta[property="og:type"]', 'content');
-    expect(ogType).toBe('product');
+    await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'product');
 
     const ogImage = await page.getAttribute('meta[property="og:image"]', 'content');
     expect(ogImage).toContain('/assets/product.jpg');
@@ -84,10 +81,9 @@ test.describe('SEO Tests', () => {
     await expect(structuredDataScript).toHaveCount(1);
 
     // Get the structured data content
+    await expect(structuredDataScript).toHaveText(/.+/);
     const structuredData = await structuredDataScript.textContent();
-    expect(structuredData).toBeTruthy();
-
-    const jsonData = JSON.parse(structuredData!);
+    const jsonData = JSON.parse(structuredData || '{}');
 
     // Verify website schema
     expect(jsonData['@context']).toBe('https://schema.org');
@@ -107,10 +103,9 @@ test.describe('SEO Tests', () => {
     await expect(structuredDataScript).toHaveCount(1);
 
     // Get the structured data content
+    await expect(structuredDataScript).toHaveText(/.+/);
     const structuredData = await structuredDataScript.textContent();
-    expect(structuredData).toBeTruthy();
-
-    const jsonData = JSON.parse(structuredData!);
+    const jsonData = JSON.parse(structuredData || '{}');
 
     // Verify product schema
     expect(jsonData['@context']).toBe('https://schema.org');
@@ -212,14 +207,12 @@ test.describe('SEO Tests', () => {
   test('should have viewport meta tag', async ({ page }) => {
     await page.goto('/');
 
-    const viewport = await page.getAttribute('meta[name="viewport"]', 'content');
-    expect(viewport).toBe('width=device-width, initial-scale=1');
+    await expect(page.locator('meta[name="viewport"]')).toHaveAttribute('content', 'width=device-width, initial-scale=1');
   });
 
   test('should have robots meta tag', async ({ page }) => {
     await page.goto('/');
 
-    const robots = await page.getAttribute('meta[name="robots"]', 'content');
-    expect(robots).toBe('index,follow');
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'index,follow');
   });
 });

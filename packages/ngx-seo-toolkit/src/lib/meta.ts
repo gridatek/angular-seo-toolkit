@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { DOCUMENT, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
-import { OpenGraphData, SeoConfig, TwitterCardData } from './seo.interfaces';
+import { OpenGraphData, SeoConfig, TwitterCardData } from './interfaces';
 
 @Injectable({
   providedIn: 'root'
