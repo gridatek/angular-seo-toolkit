@@ -138,7 +138,7 @@ export class StructuredDataService {
     };
 
     if (data.searchAction) {
-      schema.potentialAction = {
+      schema['potentialAction'] = {
         '@type': 'SearchAction',
         target: data.searchAction.target,
         'query-input': data.searchAction.queryInput

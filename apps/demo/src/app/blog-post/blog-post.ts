@@ -3,6 +3,17 @@ import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SeoService, StructuredDataService } from 'ngx-seo-toolkit';
 
+interface BlogPostData {
+  title: string;
+  content: string;
+  excerpt: string;
+  tags: string[];
+  featuredImage: string;
+  author: string;
+  publishedAt: string;
+  updatedAt: string;
+}
+
 @Component({
   selector: 'app-blog-post',
   imports: [],
@@ -20,7 +31,7 @@ export class BlogPost implements OnInit {
   private readonly structuredDataService = inject(StructuredDataService);
   private readonly platformId = inject(PLATFORM_ID);
 
-  post: any;
+  post: BlogPostData | null = null;
 
   ngOnInit(): void {
     // This works on both server and client

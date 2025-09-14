@@ -65,11 +65,12 @@ export class MetaService {
 
     tags.forEach(tag => {
       if (tag.content) {
+        const tagWithContent = { property: tag.property, content: tag.content };
         const existingTag = this.meta.getTag(`property="${tag.property}"`);
         if (existingTag) {
-          this.meta.updateTag(tag);
+          this.meta.updateTag(tagWithContent);
         } else {
-          this.meta.addTag(tag);
+          this.meta.addTag(tagWithContent);
         }
       }
     });
@@ -87,11 +88,12 @@ export class MetaService {
 
     tags.forEach(tag => {
       if (tag.content) {
+        const tagWithContent = { name: tag.name, content: tag.content };
         const existingTag = this.meta.getTag(`name="${tag.name}"`);
         if (existingTag) {
-          this.meta.updateTag(tag);
+          this.meta.updateTag(tagWithContent);
         } else {
-          this.meta.addTag(tag);
+          this.meta.addTag(tagWithContent);
         }
       }
     });
