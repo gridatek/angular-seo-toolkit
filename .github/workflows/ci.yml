@@ -13,8 +13,6 @@ permissions:
   contents: read
   pull-requests: write
 
-env:
-  NX_CLOUD_DISTRIBUTED_EXECUTION: true
 
 jobs:
   main:
@@ -37,26 +35,18 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      # Enable distributed execution via Nx Cloud
-      - name: Initialize the Nx Cloud distributed CI run
-        run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e"
-
-      # Run all CI tasks in parallel
+      # Run all CI tasks
       - name: Run linting
-        run: npx nx run-many -t lint --parallel=3
+        run: npx nx run-many -t lint
 
       - name: Run tests
-        run: npx nx run-many -t test --parallel=3 --passWithNoTests
+        run: npx nx run-many -t test --passWithNoTests
 
       - name: Run builds
-        run: npx nx run-many -t build --parallel=3
+        run: npx nx run-many -t build
 
       - name: Run E2E tests
-        run: npx nx run-many -t e2e --parallel=1
-
-      - name: Stop Nx Cloud agents
-        run: npx nx-cloud stop-all-agents
-        if: always()
+        run: npx nx run-many -t e2e
 
       # Upload test results and build artifacts
       - name: Upload Playwright Test Results
@@ -131,7 +121,3 @@ jobs:
               });
             }
 
-      # Auto-fix common issues
-      - name: Auto-fix CI issues
-        run: npx nx fix-ci
-        if: failure()
