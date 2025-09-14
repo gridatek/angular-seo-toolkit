@@ -60,7 +60,7 @@ bootstrapApplication(AppComponent, {
 
 ```typescript
 import { Component, OnInit, inject } from '@angular/core';
-import { StkSeoService, StkSeoImageDirective } from 'ngx-seo-toolkit';
+import { StkSeo, StkSeoImageDirective } from 'ngx-seo-toolkit';
 
 @Component({
   selector: 'app-home',
@@ -79,7 +79,7 @@ import { StkSeoService, StkSeoImageDirective } from 'ngx-seo-toolkit';
   `
 })
 export class HomeComponent implements OnInit {
-  private readonly seoService = inject(StkSeoService);
+  private readonly seoService = inject(StkSeo);
 
   ngOnInit(): void {
     this.seoService.updateSeo({
@@ -129,7 +129,7 @@ export const routes: Routes = [
 ```typescript
 import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { StkSeoService, StkStructuredDataService } from 'ngx-seo-toolkit';
+import { StkSeo, StkStructuredData } from 'ngx-seo-toolkit';
 
 @Component({
   selector: 'app-product',
@@ -153,8 +153,8 @@ import { StkSeoService, StkStructuredDataService } from 'ngx-seo-toolkit';
 })
 export class ProductComponent implements OnInit {
   // Modern inject pattern
-  private readonly seoService = inject(StkSeoService);
-  private readonly structuredDataService = inject(StkStructuredDataService);
+  private readonly seoService = inject(StkSeo);
+  private readonly structuredDataService = inject(StkStructuredData);
   private readonly platformId = inject(PLATFORM_ID);
   
   private readonly isBrowser = isPlatformBrowser(this.platformId);
@@ -198,7 +198,7 @@ export class ProductComponent implements OnInit {
 
 ## API Reference
 
-### StkSeoService
+### StkSeo
 
 Modern service using the `inject()` pattern internally for better tree-shaking and performance.
 
@@ -248,7 +248,7 @@ const sitemap = this.seoService.generateSitemap([
 ], 'https://mywebsite.com');
 ```
 
-### StkStructuredDataService
+### StkStructuredData
 
 Service for managing JSON-LD structured data with modern schema creation helpers.
 
@@ -417,7 +417,7 @@ bootstrapApplication(AppComponent, {
 import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { StkSeoService, StkStructuredDataService, StkSeoImageDirective } from 'angular-seo-helpers';
+import { StkSeo, StkStructuredData, StkSeoImageDirective } from 'angular-seo-helpers';
 
 interface BlogPost {
   title: string;
@@ -464,8 +464,8 @@ interface BlogPost {
 })
 export class BlogPostComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
-  private readonly seoService = inject(StkSeoService);
-  private readonly structuredDataService = inject(StkStructuredDataService);
+  private readonly seoService = inject(StkSeo);
+  private readonly structuredDataService = inject(StkStructuredData);
   private readonly platformId = inject(PLATFORM_ID);
 
   private readonly isBrowser = isPlatformBrowser(this.platformId);
@@ -547,7 +547,7 @@ export class BlogPostComponent implements OnInit {
 ```typescript
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { StkSeoService, StkStructuredDataService, StkSeoImageDirective } from 'angular-seo-helpers';
+import { StkSeo, StkStructuredData, StkSeoImageDirective } from 'angular-seo-helpers';
 
 interface Product {
   id: string;
@@ -624,8 +624,8 @@ interface Review {
 })
 export class ProductComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
-  private readonly seoService = inject(StkSeoService);
-  private readonly structuredDataService = inject(StkStructuredDataService);
+  private readonly seoService = inject(StkSeo);
+  private readonly structuredDataService = inject(StkStructuredData);
 
   // Using Angular 17+ signals
   product = signal<Product | null>(null);
@@ -826,10 +826,10 @@ npx nx e2e demo-e2e
 ```typescript
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { provideStkConfig, StkSeoService } from 'ngx-seo-toolkit';
+import { provideStkConfig, StkSeo } from 'ngx-seo-toolkit';
 
-describe('StkSeoService', () => {
-  let service: StkSeoService;
+describe('StkSeo', () => {
+  let service: StkSeo;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -841,7 +841,7 @@ describe('StkSeoService', () => {
         })
       ]
     });
-    service = TestBed.inject(StkSeoService);
+    service = TestBed.inject(StkSeo);
   });
 
   it('should create', () => {

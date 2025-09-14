@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { StkSeoImageDirective, StkSeoService, StkStructuredDataService } from 'ngx-seo-toolkit';
+import { StkSeoImageDirective, StkSeo, StkStructuredData } from 'ngx-seo-toolkit';
 
 @Component({
   selector: 'app-home',
@@ -46,8 +46,8 @@ import { StkSeoImageDirective, StkSeoService, StkStructuredDataService } from 'n
   `
 })
 export class Home implements OnInit {
-  private readonly seoService = inject(StkSeoService);
-  private readonly structuredDataService = inject(StkStructuredDataService);
+  private readonly seoService = inject(StkSeo);
+  private readonly structuredDataService = inject(StkStructuredData);
 
   ngOnInit(): void {
     // Update SEO

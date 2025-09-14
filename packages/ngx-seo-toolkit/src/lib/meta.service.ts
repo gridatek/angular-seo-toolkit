@@ -6,7 +6,7 @@ import { OpenGraphData, SeoConfig, TwitterCardData } from './seo.interfaces';
 @Injectable({
   providedIn: 'root'
 })
-export class StkMetaService {
+export class StkMeta {
   private readonly meta = inject(Meta);
   private readonly doc = inject(DOCUMENT);
   private readonly platformId = inject(PLATFORM_ID);

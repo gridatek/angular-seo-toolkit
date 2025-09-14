@@ -56,11 +56,11 @@ bootstrapApplication(AppComponent, {
 
 ```typescript
 import { Component, inject, OnInit } from '@angular/core';
-import { StkSeoService } from 'ngx-seo-toolkit';
+import { StkSeo } from 'ngx-seo-toolkit';
 
 @Component({...})
 export class MyComponent implements OnInit {
-  private readonly seoService = inject(StkSeoService);
+  private readonly seoService = inject(StkSeo);
 
   ngOnInit() {
     this.seoService.updateSeo({

@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 The ngx-seo-toolkit uses the "stk" prefix for all exported classes and directives to avoid naming conflicts:
 
-- **Services**: `StkSeoService`, `StkMetaService`, `StkStructuredDataService`
+- **Services**: `StkSeo`, `StkMeta`, `StkStructuredData`
 - **Directives**: `StkSeoImageDirective` (selector: `[stkSeoImage]`)
 - **Guards**: `stkSeoGuard`
 - **Providers**: `provideStkConfig()`

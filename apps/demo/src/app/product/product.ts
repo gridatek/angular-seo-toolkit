@@ -1,6 +1,6 @@
 import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { StkSeoService, StkStructuredDataService, StkSeoImageDirective } from 'ngx-seo-toolkit';
+import { StkSeo, StkStructuredData, StkSeoImageDirective } from 'ngx-seo-toolkit';
 
 @Component({
   selector: 'app-product',
@@ -64,8 +64,8 @@ import { StkSeoService, StkStructuredDataService, StkSeoImageDirective } from 'n
 })
 export class ProductComponent implements OnInit {
   // Modern inject pattern
-  private readonly seoService = inject(StkSeoService);
-  private readonly structuredDataService = inject(StkStructuredDataService);
+  private readonly seoService = inject(StkSeo);
+  private readonly structuredDataService = inject(StkStructuredData);
   private readonly platformId = inject(PLATFORM_ID);
 
   private readonly isBrowser = isPlatformBrowser(this.platformId);
