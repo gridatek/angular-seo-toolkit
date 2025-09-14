@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NgxSeoToolkit } from 'ngx-seo-toolkit';
 
 @Component({
-  imports: [NgxSeoToolkit, RouterModule],
+  imports: [RouterModule],
   selector: 'app-root',
-  templateUrl: './app.html',
-  styleUrl: './app.css',
+  template: '<router-outlet></router-outlet>',
+  styles: '',
 })
 export class App {
   protected title = 'demo';

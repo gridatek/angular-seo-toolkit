@@ -2,7 +2,11 @@
   "name": "ngx-seo-toolkit",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/core": "^20.2.0"
+    "@angular/core": "^20.2.0",
+    "@angular/platform-browser": "~20.2.0",
+    "@angular/common": "~20.2.0",
+    "@angular/router": "~20.2.0",
+    "rxjs": "~7.8.0"
   },
   "sideEffects": false
 }
