@@ -62,8 +62,17 @@
     }
   },
   "release": {
+    "projects": ["ngx-seo-toolkit"],
+    "projectsRelationship": "independent",
+    "releaseTagPattern": "{projectName}@{version}",
     "version": {
+      "conventionalCommits": true,
       "preVersionCommand": "npx nx run-many -t build"
+    },
+    "changelog": {
+      "projectChangelogs": {
+        "createRelease": "github"
+      }
     }
   }
 }

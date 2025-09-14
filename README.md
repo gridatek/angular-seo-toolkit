@@ -1,82 +1,245 @@
-# AngularSeoToolkit
+# Angular SEO Toolkit
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+A comprehensive monorepo containing the **ngx-seo-toolkit** Angular library and demo application, showcasing modern SEO best practices for Angular 20+ applications.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+## 📦 Packages
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+### 🛠️ [ngx-seo-toolkit](./packages/ngx-seo-toolkit/)
 
-## Finish your CI setup
+A production-ready Angular library for implementing advanced SEO features:
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/nBRVP5XN27)
+- **Meta Tag Management**: Automatic handling of title, description, Open Graph, Twitter Cards
+- **Structured Data**: JSON-LD schemas for rich snippets (Article, Product, Website, etc.)
+- **Image Optimization**: Modern image directive with `fetchpriority` and lazy loading
+- **SSR Support**: Optimized for Angular Universal server-side rendering
+- **Standalone Architecture**: Modern Angular 20+ with tree-shakable providers
 
+[📖 **View Package Documentation**](./packages/ngx-seo-toolkit/README.md)
 
-## Run tasks
+### 🎯 [Demo Application](./apps/demo/)
 
-To run the dev server for your app, use:
+A complete Angular application demonstrating all SEO toolkit features:
 
-```sh
+- **Home Page**: Website schema and hero image optimization
+- **Product Page**: E-commerce schema with microdata markup
+- **About Page**: Basic SEO implementation
+
+Run the demo: `npx nx serve demo`
+
+## 🚀 Quick Start
+
+### Installation
+
+```bash
+npm install ngx-seo-toolkit
+```
+
+### Basic Setup
+
+```typescript
+// main.ts
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideSeoHelpers } from 'ngx-seo-toolkit';
+import { AppComponent } from './app/app.component';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideSeoHelpers({
+      siteName: 'My Website',
+      titleTemplate: '%s | My Website'
+    })
+  ]
+});
+```
+
+### Usage in Components
+
+```typescript
+import { Component, inject, OnInit } from '@angular/core';
+import { SeoService } from 'ngx-seo-toolkit';
+
+@Component({...})
+export class MyComponent implements OnInit {
+  private readonly seoService = inject(SeoService);
+
+  ngOnInit() {
+    this.seoService.updateSeo({
+      title: 'My Page Title',
+      description: 'My page description for SEO',
+      keywords: ['angular', 'seo']
+    });
+  }
+}
+```
+
+## 🧪 Testing
+
+The project includes comprehensive testing with Playwright:
+
+### Run Tests
+
+```bash
+# Install dependencies
+npm install
+
+# Run unit tests
+npx nx test ngx-seo-toolkit
+
+# Run E2E tests
+npx nx e2e demo-e2e
+
+# Run all tests
+npx nx run-many -t test lint e2e
+```
+
+### Test Coverage
+
+- ✅ **SEO Meta Tags**: Title, description, Open Graph, Twitter Cards validation
+- ✅ **Structured Data**: JSON-LD schema verification
+- ✅ **Image Optimization**: Modern loading attributes testing
+- ✅ **Navigation**: Route-based SEO updates
+- ✅ **SSR Compatibility**: Server-side rendering validation
+
+## 🏗️ Development
+
+This project uses Nx for monorepo management:
+
+### Prerequisites
+
+- Node.js 20+
+- npm 10+
+
+### Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/your-org/angular-seo-toolkit.git
+cd angular-seo-toolkit
+
+# Install dependencies
+npm install
+
+# Start development server
 npx nx serve demo
 ```
 
-To create a production bundle:
+### Available Commands
 
-```sh
-npx nx build demo
+```bash
+# Development
+npx nx serve demo                 # Start demo app
+npx nx build ngx-seo-toolkit     # Build library
+npx nx build demo               # Build demo app
+
+# Testing
+npx nx test ngx-seo-toolkit     # Unit tests
+npx nx e2e demo-e2e            # E2E tests
+npx nx lint ngx-seo-toolkit    # Linting
+
+# Release (see release guide)
+npx nx release version --dry-run # Test release
+npx nx release version          # Create version
+npx nx release publish          # Publish to NPM
 ```
 
-To see all available targets to run for a project, run:
+## 📋 Release Process
 
-```sh
-npx nx show project demo
+### Automated Releases
+
+The project uses GitHub Actions for automated publishing:
+
+1. **Push to main**: Triggers automatic release based on conventional commits
+2. **Manual workflow**: Use GitHub Actions "Manual Release" workflow for controlled releases
+
+### Local Releases
+
+```bash
+# Test release (dry run)
+npx nx release version --dry-run
+
+# Create and publish release
+npx nx release version
+npx nx release publish
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+### Conventional Commits
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Use conventional commit format for automatic versioning:
 
-## Add new projects
+```bash
+# Patch version (bug fixes)
+git commit -m "fix: resolve meta tag duplication"
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+# Minor version (new features)
+git commit -m "feat: add breadcrumb schema support"
 
-Use the plugin's generator to create new projects.
-
-To generate a new application, use:
-
-```sh
-npx nx g @nx/angular:app demo
+# Major version (breaking changes)
+git commit -m "feat!: new standalone API"
 ```
 
-To generate a new library, use:
+## 🔧 Project Structure
 
-```sh
-npx nx g @nx/angular:lib mylib
+```
+angular-seo-toolkit/
+├── apps/
+│   ├── demo/                   # Demo application
+│   └── demo-e2e/              # E2E tests
+├── packages/
+│   └── ngx-seo-toolkit/       # Main library
+├── .github/
+│   └── workflows/             # CI/CD workflows
+├── RELEASE_SETUP.md           # Release setup guide
+└── README.md                  # This file
 ```
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+## 🤝 Contributing
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+We welcome contributions! Please follow these steps:
 
+1. **Fork the repository**
+2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
+3. **Follow conventional commits**: `git commit -m "feat: add amazing feature"`
+4. **Run tests**: `npx nx run-many -t test lint e2e`
+5. **Push changes**: `git push origin feature/amazing-feature`
+6. **Open a Pull Request**
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### Development Guidelines
 
-## Install Nx Console
+- ✅ **Write tests** for all new features
+- ✅ **Update documentation** as needed
+- ✅ **Follow Angular style guide**
+- ✅ **Use conventional commit format**
+- ✅ **Ensure all CI checks pass**
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+## 📊 Package Stats
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- **Bundle Size**: ~15KB gzipped (all features)
+- **Angular Version**: 20+
+- **Node.js**: 20+
+- **Browser Support**: Modern browsers with graceful degradation
 
-## Useful links
+## 🔗 Links
 
-Learn more:
+- 📦 **NPM Package**: [ngx-seo-toolkit](https://www.npmjs.com/package/ngx-seo-toolkit)
+- 📖 **Documentation**: [Package README](./packages/ngx-seo-toolkit/README.md)
+- 🚀 **Release Setup**: [Release Guide](./RELEASE_SETUP.md)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/your-org/angular-seo-toolkit/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/your-org/angular-seo-toolkit/discussions)
 
-- [Learn more about this workspace setup](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 📄 License
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+MIT License - see [LICENSE](./LICENSE) file for details.
+
+## 🎯 Roadmap
+
+- [ ] Schema.org validation
+- [ ] Performance monitoring integration
+- [ ] Additional structured data schemas
+- [ ] Sitemap automation
+- [ ] Analytics integration
+
+---
+
+⭐ **If this project helped you, please consider giving it a star!** ⭐
+
+Made with ❤️ for the Angular community

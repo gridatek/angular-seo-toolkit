@@ -1,0 +1,178 @@
+name: Manual Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (patch, minor, major, or specific version like 1.2.3)'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+          - prerelease
+      dry-run:
+        description: 'Dry run (do not actually publish)'
+        required: false
+        default: false
+        type: boolean
+      tag:
+        description: 'NPM tag (latest, beta, alpha, etc.)'
+        required: false
+        default: 'latest'
+
+concurrency:
+  group: manual-release-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      packages: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run all tests
+        run: |
+          npx nx run-many -t build test lint --parallel=3 --passWithNoTests
+          npx nx run-many -t e2e --parallel=1
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Dry Run Release
+        if: ${{ inputs.dry-run == true }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🧪 DRY RUN MODE - No actual publishing will occur"
+          echo "Version bump type: ${{ inputs.version }}"
+          echo "NPM tag: ${{ inputs.tag }}"
+
+          # Show what would be released
+          npx nx release version --dry-run --specifier=${{ inputs.version }}
+          echo "✅ Dry run completed successfully"
+
+      - name: Release
+        if: ${{ inputs.dry-run == false }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo "🚀 Starting release process..."
+          echo "Version bump type: ${{ inputs.version }}"
+          echo "NPM tag: ${{ inputs.tag }}"
+
+          # Set npm authentication
+          npm config set '//registry.npmjs.org/:_authToken' "$NPM_TOKEN"
+
+          # Create version
+          npx nx release version --specifier=${{ inputs.version }}
+
+          # Publish to npm
+          npx nx release publish --tag=${{ inputs.tag }}
+
+          # Generate changelog
+          npx nx release changelog
+
+      - name: Create GitHub Release
+        if: ${{ inputs.dry-run == false }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Get the latest version
+          VERSION=$(node -p "require('./packages/ngx-seo-toolkit/package.json').version")
+          TAG_NAME="ngx-seo-toolkit@${VERSION}"
+
+          echo "Creating GitHub release for version: ${VERSION}"
+          echo "Tag name: ${TAG_NAME}"
+
+          # Wait a moment for git operations to complete
+          sleep 2
+
+          # Check if tag exists
+          if git rev-parse "$TAG_NAME" >/dev/null 2>&1; then
+            echo "Tag found, creating GitHub release..."
+
+            # Create release notes
+            RELEASE_NOTES="## ngx-seo-toolkit v${VERSION}
+
+          This release was created via manual workflow dispatch.
+
+          ### 📦 Installation
+          \`\`\`bash
+          npm install ngx-seo-toolkit@${VERSION}
+          \`\`\`
+
+          ### 🔗 Links
+          - [📚 Documentation](https://github.com/${{ github.repository }}/blob/main/packages/ngx-seo-toolkit/README.md)
+          - [📋 Changelog](https://github.com/${{ github.repository }}/blob/main/packages/ngx-seo-toolkit/CHANGELOG.md)
+          - [📦 NPM Package](https://www.npmjs.com/package/ngx-seo-toolkit/v/${VERSION})
+
+          ### ✨ What's New
+          See the [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/packages/ngx-seo-toolkit/CHANGELOG.md) for detailed changes."
+
+            # Create GitHub release
+            gh release create "$TAG_NAME" \
+              --title "ngx-seo-toolkit v${VERSION}" \
+              --notes "$RELEASE_NOTES" \
+              --latest=${{ inputs.tag == 'latest' && 'true' || 'false' }} \
+              --prerelease=${{ contains(inputs.version, 'pre') && 'true' || 'false' }}
+
+            echo "✅ GitHub release created successfully!"
+          else
+            echo "❌ Tag $TAG_NAME not found, skipping GitHub release creation"
+            exit 1
+          fi
+
+      - name: Post-release summary
+        if: ${{ inputs.dry-run == false }}
+        run: |
+          VERSION=$(node -p "require('./packages/ngx-seo-toolkit/package.json').version")
+          echo "
+          ## 🎉 Release Summary
+
+          - **Version**: ${VERSION}
+          - **NPM Tag**: ${{ inputs.tag }}
+          - **Package**: [ngx-seo-toolkit@${VERSION}](https://www.npmjs.com/package/ngx-seo-toolkit/v/${VERSION})
+          - **GitHub Release**: [ngx-seo-toolkit@${VERSION}](https://github.com/${{ github.repository }}/releases/tag/ngx-seo-toolkit@${VERSION})
+
+          The package has been successfully published to NPM and GitHub releases!
+          "
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ Release failed! Please check the logs above for details."
+          echo "Common issues:"
+          echo "- NPM_TOKEN secret not set or expired"
+          echo "- Version already exists"
+          echo "- Build/test failures"
+          echo "- Git configuration issues"

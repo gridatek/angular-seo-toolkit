@@ -1,6 +1,43 @@
 {
   "name": "ngx-seo-toolkit",
   "version": "0.0.1",
+  "description": "A comprehensive Angular library (20+) that provides modern, standalone services, directives, and guards for implementing advanced SEO best practices. Built with the latest Angular features and optimized for Server-Side Rendering (SSR).",
+  "keywords": [
+    "angular",
+    "seo",
+    "ssr",
+    "meta-tags",
+    "structured-data",
+    "open-graph",
+    "twitter-cards",
+    "json-ld",
+    "schema.org",
+    "angular-universal",
+    "performance",
+    "standalone",
+    "angular20"
+  ],
+  "author": {
+    "name": "Your Name",
+    "email": "your.email@example.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/your-org/angular-seo-toolkit#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/angular-seo-toolkit.git",
+    "directory": "packages/ngx-seo-toolkit"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/angular-seo-toolkit/issues"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": {
     "@angular/core": "^20.2.0",
     "@angular/platform-browser": "~20.2.0",

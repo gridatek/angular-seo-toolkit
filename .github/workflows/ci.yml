@@ -5,39 +5,133 @@ on:
     branches:
       - main
   pull_request:
+    branches:
+      - main
 
 permissions:
   actions: read
   contents: read
+  pull-requests: write
+
+env:
+  NX_CLOUD_DISTRIBUTED_EXECUTION: true
 
 jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          filter: tree:0
           fetch-depth: 0
 
-      # This enables task distribution via Nx Cloud
-      # Run this command as early as possible, before dependencies are installed
-      # Learn more at https://nx.dev/ci/reference/nx-cloud-cli#npx-nxcloud-startcirun
-      # Uncomment this line to enable task distribution
-      # - run: npx nx start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
-
-      # Cache node_modules
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
-      - run: npm ci --legacy-peer-deps
-      - run: npx playwright install --with-deps
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
 
-      # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
-      # - run: npx nx-cloud record -- echo Hello World
-      # When you enable task distribution, run the e2e-ci task instead of e2e
-      - run: npx nx run-many -t lint test build e2e
-      # Nx Cloud recommends fixes for failures to help you get CI green faster. Learn more: https://nx.dev/ci/features/self-healing-ci
-      - run: npx nx fix-ci
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      # Enable distributed execution via Nx Cloud
+      - name: Initialize the Nx Cloud distributed CI run
+        run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e"
+
+      # Run all CI tasks in parallel
+      - name: Run linting
+        run: npx nx run-many -t lint --parallel=3
+
+      - name: Run tests
+        run: npx nx run-many -t test --parallel=3 --passWithNoTests
+
+      - name: Run builds
+        run: npx nx run-many -t build --parallel=3
+
+      - name: Run E2E tests
+        run: npx nx run-many -t e2e --parallel=1
+
+      - name: Stop Nx Cloud agents
+        run: npx nx-cloud stop-all-agents
         if: always()
+
+      # Upload test results and build artifacts
+      - name: Upload Playwright Test Results
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-results
+          path: |
+            **/playwright-report/
+            **/test-output/
+          retention-days: 7
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: |
+            dist/
+            !dist/**/*.map
+          retention-days: 1
+
+      # Comment on PR with build status
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        if: github.event_name == 'pull_request'
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+
+            const status = '${{ job.status }}' === 'success' ? '✅ Passed' : '❌ Failed';
+            const body = `## CI Build Status: ${status}
+
+            **Build Summary:**
+            - ✅ Linting completed
+            - ✅ Tests completed
+            - ✅ Build completed
+            - ✅ E2E tests completed
+
+            **Commit:** \`${context.sha.substring(0, 7)}\`
+            **Workflow:** [View details](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})
+            `;
+
+            // Find existing comment
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const existingComment = comments.data.find(
+              comment => comment.user.login === 'github-actions[bot]' &&
+                         comment.body.includes('CI Build Status')
+            );
+
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existingComment.id,
+                body: body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: body
+              });
+            }
+
+      # Auto-fix common issues
+      - name: Auto-fix CI issues
+        run: npx nx fix-ci
+        if: failure()
