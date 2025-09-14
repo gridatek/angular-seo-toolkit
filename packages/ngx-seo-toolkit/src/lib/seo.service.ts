@@ -3,20 +3,20 @@ import { DestroyRef, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { MetaService } from './meta.service';
+import { StkMetaService } from './meta.service';
 import { SeoConfig } from './seo.interfaces';
 import { SEO_DEFAULT_CONFIG } from './seo.tokens';
-import { StructuredDataService } from './structured-data.service';
+import { StkStructuredDataService } from './structured-data.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SeoService {
+export class StkSeoService {
   private readonly titleService = inject(Title);
   private readonly router = inject(Router);
-  private readonly metaService = inject(MetaService);
-  private readonly structuredDataService = inject(StructuredDataService);
+  private readonly metaService = inject(StkMetaService);
+  private readonly structuredDataService = inject(StkStructuredDataService);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly destroyRef = inject(DestroyRef);
   private readonly defaultConfig = inject(SEO_DEFAULT_CONFIG);

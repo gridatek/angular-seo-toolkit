@@ -2,11 +2,11 @@ import { Directive, ElementRef, Input, OnInit, inject, PLATFORM_ID } from '@angu
 import { isPlatformBrowser } from '@angular/common';
 
 @Directive({
-  selector: '[seoImage]',
+  selector: '[stkSeoImage]',
   standalone: true
 })
-export class SeoImageDirective implements OnInit {
-  @Input() seoImage = '';
+export class StkSeoImageDirective implements OnInit {
+  @Input() stkSeoImage = '';
   @Input() alt = '';
   @Input() loading: 'lazy' | 'eager' = 'lazy';
   @Input() fetchpriority: 'high' | 'low' | 'auto' = 'auto';

@@ -1,13 +1,13 @@
 import { Route } from '@angular/router';
 import { Home } from './home/home';
-import { seoGuard } from 'ngx-seo-toolkit';
+import { stkSeoGuard } from 'ngx-seo-toolkit';
 
 export const appRoutes: Route[] = [
 
     {
         path: '',
         component: Home,
-        canActivate: [seoGuard],
+        canActivate: [stkSeoGuard],
         data: {
             seo: {
                 title: 'Home',
@@ -19,7 +19,7 @@ export const appRoutes: Route[] = [
     {
         path: 'about',
         loadComponent: () => import('./about/about').then(c => c.About),
-        canActivate: [seoGuard],
+        canActivate: [stkSeoGuard],
         data: {
             seo: {
                 title: 'About Us',
@@ -31,7 +31,7 @@ export const appRoutes: Route[] = [
     {
         path: 'product',
         loadComponent: () => import('./product/product').then(c => c.ProductComponent),
-        canActivate: [seoGuard],
+        canActivate: [stkSeoGuard],
         data: {
             seo: {
                 title: 'Amazing Product - Buy Online',

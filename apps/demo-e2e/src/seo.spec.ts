@@ -175,15 +175,15 @@ test.describe('SEO Tests', () => {
   test('should have SEO image directive attributes', async ({ page }) => {
     await page.goto('/');
 
-    const seoImage = page.locator('img[seoImage]');
-    await expect(seoImage).toBeVisible();
-    await expect(seoImage).toHaveAttribute('loading', 'eager');
-    await expect(seoImage).toHaveAttribute('fetchpriority', 'high');
-    await expect(seoImage).toHaveAttribute('alt');
+    const stkSeoImage = page.locator('img[stkSeoImage]');
+    await expect(stkSeoImage).toBeVisible();
+    await expect(stkSeoImage).toHaveAttribute('loading', 'eager');
+    await expect(stkSeoImage).toHaveAttribute('fetchpriority', 'high');
+    await expect(stkSeoImage).toHaveAttribute('alt');
 
     await page.goto('/product');
 
-    const productSeoImage = page.locator('img[seoImage]');
+    const productSeoImage = page.locator('img[stkSeoImage]');
     await expect(productSeoImage).toBeVisible();
     await expect(productSeoImage).toHaveAttribute('loading', 'eager');
     await expect(productSeoImage).toHaveAttribute('fetchpriority', 'high');

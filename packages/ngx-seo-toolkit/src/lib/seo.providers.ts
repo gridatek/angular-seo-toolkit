@@ -1,17 +1,17 @@
 import { Provider, EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
 import { SeoDefaultConfig } from './seo.interfaces';
 import { SEO_DEFAULT_CONFIG } from './seo.tokens';
-import { SeoService } from './seo.service';
-import { MetaService } from './meta.service';
-import { StructuredDataService } from './structured-data.service';
+import { StkSeoService } from './seo.service';
+import { StkMetaService } from './meta.service';
+import { StkStructuredDataService } from './structured-data.service';
 
-export type SeoProvidersConfig = SeoDefaultConfig
+export type StkSeoProvidersConfig = SeoDefaultConfig
 
-export function provideSeoHelpers(config?: SeoProvidersConfig): EnvironmentProviders {
+export function provideStkSeoHelpers(config?: StkSeoProvidersConfig): EnvironmentProviders {
   const providers: Provider[] = [
-    SeoService,
-    MetaService,
-    StructuredDataService
+    StkSeoService,
+    StkMetaService,
+    StkStructuredDataService
   ];
 
   if (config) {

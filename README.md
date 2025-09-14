@@ -39,12 +39,12 @@ npm install ngx-seo-toolkit
 ```typescript
 // main.ts
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideSeoHelpers } from 'ngx-seo-toolkit';
+import { provideStkSeoHelpers } from 'ngx-seo-toolkit';
 import { AppComponent } from './app/app.component';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideSeoHelpers({
+    provideStkSeoHelpers({
       siteName: 'My Website',
       titleTemplate: '%s | My Website'
     })
@@ -56,11 +56,11 @@ bootstrapApplication(AppComponent, {
 
 ```typescript
 import { Component, inject, OnInit } from '@angular/core';
-import { SeoService } from 'ngx-seo-toolkit';
+import { StkSeoService } from 'ngx-seo-toolkit';
 
 @Component({...})
 export class MyComponent implements OnInit {
-  private readonly seoService = inject(SeoService);
+  private readonly seoService = inject(StkSeoService);
 
   ngOnInit() {
     this.seoService.updateSeo({

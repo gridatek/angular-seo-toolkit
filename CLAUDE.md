@@ -2,6 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 🏷️ Naming Convention
+
+The ngx-seo-toolkit uses the "stk" prefix for all exported classes and directives to avoid naming conflicts:
+
+- **Services**: `StkSeoService`, `StkMetaService`, `StkStructuredDataService`
+- **Directives**: `StkSeoImageDirective` (selector: `[stkSeoImage]`)
+- **Guards**: `stkSeoGuard`
+- **Providers**: `provideStkSeoHelpers()`
+
 ## Project Structure
 
 This is an Nx monorepo for Angular SEO toolkit development. The main application is located in `apps/demo/` with the following key structure:

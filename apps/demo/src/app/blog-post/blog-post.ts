@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SeoService, StructuredDataService } from 'ngx-seo-toolkit';
+import { StkSeoService, StkStructuredDataService } from 'ngx-seo-toolkit';
 
 interface BlogPostData {
   title: string;
@@ -27,8 +27,8 @@ interface BlogPostData {
 })
 export class BlogPost implements OnInit {
   private readonly route = inject(ActivatedRoute);
-  private readonly seoService = inject(SeoService);
-  private readonly structuredDataService = inject(StructuredDataService);
+  private readonly seoService = inject(StkSeoService);
+  private readonly structuredDataService = inject(StkStructuredDataService);
   private readonly platformId = inject(PLATFORM_ID);
 
   post: BlogPostData | null = null;

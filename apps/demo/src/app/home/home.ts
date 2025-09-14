@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SeoImageDirective, SeoService, StructuredDataService } from 'ngx-seo-toolkit';
+import { StkSeoImageDirective, StkSeoService, StkStructuredDataService } from 'ngx-seo-toolkit';
 
 @Component({
   selector: 'app-home',
-  imports: [SeoImageDirective, RouterModule],
+  imports: [StkSeoImageDirective, RouterModule],
   template: `
  <main>
       <nav>
@@ -14,7 +14,7 @@ import { SeoImageDirective, SeoService, StructuredDataService } from 'ngx-seo-to
       </nav>
 
       <h1>Welcome to My Website</h1>
-      <img seoImage
+      <img stkSeoImage
            src="/assets/hero.jpg"
            alt="Hero image showing our amazing product"
            loading="eager"
@@ -46,8 +46,8 @@ import { SeoImageDirective, SeoService, StructuredDataService } from 'ngx-seo-to
   `
 })
 export class Home implements OnInit {
-  private readonly seoService = inject(SeoService);
-  private readonly structuredDataService = inject(StructuredDataService);
+  private readonly seoService = inject(StkSeoService);
+  private readonly structuredDataService = inject(StkStructuredDataService);
 
   ngOnInit(): void {
     // Update SEO

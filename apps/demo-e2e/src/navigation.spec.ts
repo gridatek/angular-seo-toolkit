@@ -17,7 +17,7 @@ test.describe('Navigation Tests', () => {
     await expect(page.locator('nav a[routerLink="/product"]')).toContainText('Product');
 
     // Check hero image is present
-    const heroImage = page.locator('img[seoImage]');
+    const heroImage = page.locator('img[stkSeoImage]');
     await expect(heroImage).toBeVisible();
     await expect(heroImage).toHaveAttribute('alt', 'Hero image showing our amazing product');
     await expect(heroImage).toHaveAttribute('loading', 'eager');
@@ -50,7 +50,7 @@ test.describe('Navigation Tests', () => {
     await expect(page.locator('h1[itemprop="name"]')).toContainText('Amazing Product');
 
     // Check product image with SEO directive
-    const productImage = page.locator('img[seoImage]');
+    const productImage = page.locator('img[stkSeoImage]');
     await expect(productImage).toBeVisible();
     await expect(productImage).toHaveAttribute('alt', 'Amazing Product');
     await expect(productImage).toHaveAttribute('loading', 'eager');

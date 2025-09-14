@@ -38,14 +38,14 @@ Set up the SEO toolkit in your main application bootstrap:
 ```typescript
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
-import { provideSeoHelpers } from 'ngx-seo-toolkit';
+import { provideStkSeoHelpers } from 'ngx-seo-toolkit';
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
-    provideSeoHelpers({
+    provideStkSeoHelpers({
       siteName: 'My Awesome Website',
       titleTemplate: '%s | My Website',
       defaultAuthor: 'John Doe',
@@ -60,16 +60,16 @@ bootstrapApplication(AppComponent, {
 
 ```typescript
 import { Component, OnInit, inject } from '@angular/core';
-import { SeoService, SeoImageDirective } from 'ngx-seo-toolkit';
+import { StkSeoService, StkSeoImageDirective } from 'ngx-seo-toolkit';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [SeoImageDirective],
+  imports: [StkSeoImageDirective],
   template: `
     <main>
       <h1>Welcome to My Website</h1>
-      <img seoImage 
+      <img stkSeoImage 
            src="/assets/hero.jpg" 
            alt="Hero image"
            loading="eager"
@@ -79,7 +79,7 @@ import { SeoService, SeoImageDirective } from 'ngx-seo-toolkit';
   `
 })
 export class HomeComponent implements OnInit {
-  private readonly seoService = inject(SeoService);
+  private readonly seoService = inject(StkSeoService);
 
   ngOnInit(): void {
     this.seoService.updateSeo({
@@ -98,13 +98,13 @@ export class HomeComponent implements OnInit {
 
 ```typescript
 import { Routes } from '@angular/router';
-import { seoGuard } from 'ngx-seo-toolkit';
+import { stkSeoGuard } from 'ngx-seo-toolkit';
 
 export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    canActivate: [seoGuard],
+    canActivate: [stkSeoGuard],
     data: {
       seo: {
         title: 'Home',
@@ -116,7 +116,7 @@ export const routes: Routes = [
   {
     path: 'blog/:slug',
     loadComponent: () => import('./blog/blog-post.component').then(c => c.BlogPostComponent),
-    canActivate: [seoGuard],
+    canActivate: [stkSeoGuard],
     resolve: {
       post: BlogPostResolver
     }
@@ -129,7 +129,7 @@ export const routes: Routes = [
 ```typescript
 import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { SeoService, StructuredDataService } from 'ngx-seo-toolkit';
+import { StkSeoService, StkStructuredDataService } from 'ngx-seo-toolkit';
 
 @Component({
   selector: 'app-product',
@@ -137,7 +137,7 @@ import { SeoService, StructuredDataService } from 'ngx-seo-toolkit';
   template: `
     <div itemscope itemtype="https://schema.org/Product">
       <h1 itemprop="name">{{ product.name }}</h1>
-      <img seoImage 
+      <img stkSeoImage 
            [src]="product.image" 
            [alt]="product.name"
            loading="eager"
@@ -153,8 +153,8 @@ import { SeoService, StructuredDataService } from 'ngx-seo-toolkit';
 })
 export class ProductComponent implements OnInit {
   // Modern inject pattern
-  private readonly seoService = inject(SeoService);
-  private readonly structuredDataService = inject(StructuredDataService);
+  private readonly seoService = inject(StkSeoService);
+  private readonly structuredDataService = inject(StkStructuredDataService);
   private readonly platformId = inject(PLATFORM_ID);
   
   private readonly isBrowser = isPlatformBrowser(this.platformId);
@@ -198,7 +198,7 @@ export class ProductComponent implements OnInit {
 
 ## API Reference
 
-### SeoService
+### StkSeoService
 
 Modern service using the `inject()` pattern internally for better tree-shaking and performance.
 
@@ -248,7 +248,7 @@ const sitemap = this.seoService.generateSitemap([
 ], 'https://mywebsite.com');
 ```
 
-### StructuredDataService
+### StkStructuredDataService
 
 Service for managing JSON-LD structured data with modern schema creation helpers.
 
@@ -323,19 +323,19 @@ Standalone directive with modern image optimization features.
 
 ```html
 <!-- Basic usage -->
-<img seoImage 
+<img stkSeoImage 
      src="/assets/hero.jpg" 
      alt="Hero image">
 
 <!-- Advanced usage with modern features -->
-<img seoImage 
+<img stkSeoImage 
      src="/assets/critical-image.jpg" 
      alt="Critical above-fold image"
      loading="eager"
      fetchpriority="high">
 
 <!-- Lazy loading (default) -->
-<img seoImage 
+<img stkSeoImage 
      src="/assets/gallery-image.jpg" 
      alt="Gallery image"
      loading="lazy"
@@ -343,7 +343,7 @@ Standalone directive with modern image optimization features.
 ```
 
 **Directive Inputs:**
-- `seoImage`: Main directive selector
+- `stkSeoImage`: Main directive selector
 - `alt`: Alt text for accessibility and SEO
 - `loading`: 'lazy' | 'eager' (defaults to 'lazy')
 - `fetchpriority`: 'high' | 'low' | 'auto' (modern browsers only)
@@ -354,19 +354,19 @@ Standalone directive with modern image optimization features.
 - Browser-only error handling
 - Platform-aware optimizations
 
-### Functional Guard (seoGuard)
+### Functional Guard (stkSeoGuard)
 
 Modern functional guard using `CanActivateFn`.
 
 ```typescript
 import { Routes } from '@angular/router';
-import { seoGuard } from 'ngx-seo-toolkit';
+import { stkSeoGuard } from 'ngx-seo-toolkit';
 
 export const routes: Routes = [
   {
     path: 'blog/:slug',
     loadComponent: () => import('./blog-post.component').then(c => c.BlogPostComponent),
-    canActivate: [seoGuard],
+    canActivate: [stkSeoGuard],
     resolve: {
       post: blogPostResolver
     },
@@ -382,18 +382,18 @@ export const routes: Routes = [
 
 ## Provider Configuration
 
-### provideSeoHelpers()
+### provideStkSeoHelpers()
 
 Modern environment providers for Angular 17+.
 
 ```typescript
 // main.ts
-import { provideSeoHelpers } from 'ngx-seo-toolkit';
+import { provideStkSeoHelpers } from 'ngx-seo-toolkit';
 
 bootstrapApplication(AppComponent, {
   providers: [
     // ... other providers
-    provideSeoHelpers({
+    provideStkSeoHelpers({
       siteName: 'My Website',
       titleTemplate: '%s | My Website', // %s will be replaced with page title
       defaultTitle: 'My Website',
@@ -417,7 +417,7 @@ bootstrapApplication(AppComponent, {
 import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { SeoService, StructuredDataService, SeoImageDirective } from 'angular-seo-helpers';
+import { StkSeoService, StkStructuredDataService, StkSeoImageDirective } from 'angular-seo-helpers';
 
 interface BlogPost {
   title: string;
@@ -434,12 +434,12 @@ interface BlogPost {
 @Component({
   selector: 'app-blog-post',
   standalone: true,
-  imports: [SeoImageDirective],
+  imports: [StkSeoImageDirective],
   template: `
     <article>
       <header>
         <h1>{{ post?.title }}</h1>
-        <img seoImage 
+        <img stkSeoImage 
              [src]="post?.featuredImage" 
              [alt]="post?.title"
              loading="eager"
@@ -464,8 +464,8 @@ interface BlogPost {
 })
 export class BlogPostComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
-  private readonly seoService = inject(SeoService);
-  private readonly structuredDataService = inject(StructuredDataService);
+  private readonly seoService = inject(StkSeoService);
+  private readonly structuredDataService = inject(StkStructuredDataService);
   private readonly platformId = inject(PLATFORM_ID);
 
   private readonly isBrowser = isPlatformBrowser(this.platformId);
@@ -547,7 +547,7 @@ export class BlogPostComponent implements OnInit {
 ```typescript
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SeoService, StructuredDataService, SeoImageDirective } from 'angular-seo-helpers';
+import { StkSeoService, StkStructuredDataService, StkSeoImageDirective } from 'angular-seo-helpers';
 
 interface Product {
   id: string;
@@ -573,14 +573,14 @@ interface Review {
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [SeoImageDirective],
+  imports: [StkSeoImageDirective],
   template: `
     <div itemscope itemtype="https://schema.org/Product">
       <h1 itemprop="name">{{ product()?.name }}</h1>
       
       <div class="product-images">
         @for (image of product()?.images; track image; let first = $first) {
-          <img seoImage 
+          <img stkSeoImage 
                [src]="image" 
                [alt]="product()?.name"
                [loading]="first ? 'eager' : 'lazy'"
@@ -624,8 +624,8 @@ interface Review {
 })
 export class ProductComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
-  private readonly seoService = inject(SeoService);
-  private readonly structuredDataService = inject(StructuredDataService);
+  private readonly seoService = inject(StkSeoService);
+  private readonly structuredDataService = inject(StkStructuredDataService);
 
   // Using Angular 17+ signals
   product = signal<Product | null>(null);
@@ -721,28 +721,28 @@ export const productResolver: ResolveFn<Product> = (route, state) => {
 
 ```html
 <!-- Hero images: Load immediately with high priority -->
-<img seoImage 
+<img stkSeoImage 
      src="/assets/hero.jpg" 
      alt="Hero image"
      loading="eager"
      fetchpriority="high">
 
 <!-- Above-the-fold product images -->
-<img seoImage 
+<img stkSeoImage 
      src="/assets/product-main.jpg" 
      alt="Product image"
      loading="eager"
      fetchpriority="high">
 
 <!-- Gallery images: Lazy load with low priority -->
-<img seoImage 
+<img stkSeoImage 
      src="/assets/gallery-image.jpg" 
      alt="Gallery image"
      loading="lazy"
      fetchpriority="low">
 
 <!-- Default behavior: Lazy load -->
-<img seoImage 
+<img stkSeoImage 
      src="/assets/content-image.jpg" 
      alt="Content image">
 ```
@@ -773,11 +773,11 @@ export class AppModule {}
 ### After (Standalone)
 ```typescript
 // main.ts
-import { provideSeoHelpers } from 'ngx-seo-toolkit';
+import { provideStkSeoHelpers } from 'ngx-seo-toolkit';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideSeoHelpers({
+    provideStkSeoHelpers({
       siteName: 'My Website'
     })
   ]
@@ -826,22 +826,22 @@ npx nx e2e demo-e2e
 ```typescript
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { provideSeoHelpers, SeoService } from 'ngx-seo-toolkit';
+import { provideStkSeoHelpers, StkSeoService } from 'ngx-seo-toolkit';
 
-describe('SeoService', () => {
-  let service: SeoService;
+describe('StkSeoService', () => {
+  let service: StkSeoService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
-        provideSeoHelpers({
+        provideStkSeoHelpers({
           siteName: 'Test Site',
           titleTemplate: '%s | Test'
         })
       ]
     });
-    service = TestBed.inject(SeoService);
+    service = TestBed.inject(StkSeoService);
   });
 
   it('should create', () => {
@@ -863,7 +863,7 @@ describe('SeoService', () => {
 4. **Control Flow**: Use modern `@if`, `@for` syntax in templates
 5. **Functional Guards**: Prefer `CanActivateFn` over class-based guards
 6. **Inject Function**: Use `inject()` in functional contexts
-7. **Environment Providers**: Use `provideSeoHelpers()` for better tree-shaking
+7. **Environment Providers**: Use `provideStkSeoHelpers()` for better tree-shaking
 
 ## 🏗️ Architecture & Design Principles
 

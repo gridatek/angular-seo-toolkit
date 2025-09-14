@@ -1,13 +1,13 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { SeoService } from './seo.service';
+import { StkSeoService } from './seo.service';
 import { SeoConfig } from './seo.interfaces';
 
-export const seoGuard: CanActivateFn = (
+export const stkSeoGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
-  const seoService = inject(SeoService);
+  const seoService = inject(StkSeoService);
 
   // Get SEO data from route data
   const seoData: SeoConfig = route.data['seo'];

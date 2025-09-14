@@ -5,7 +5,7 @@ import { StructuredDataSchema } from './seo.interfaces';
 @Injectable({
   providedIn: 'root'
 })
-export class StructuredDataService {
+export class StkStructuredDataService {
   private readonly doc = inject(DOCUMENT);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);

@@ -1,14 +1,14 @@
 import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { SeoService, StructuredDataService, SeoImageDirective } from 'ngx-seo-toolkit';
+import { StkSeoService, StkStructuredDataService, StkSeoImageDirective } from 'ngx-seo-toolkit';
 
 @Component({
   selector: 'app-product',
-  imports: [SeoImageDirective],
+  imports: [StkSeoImageDirective],
   template: `
     <div itemscope itemtype="https://schema.org/Product">
       <h1 itemprop="name">{{ product.name }}</h1>
-      <img seoImage
+      <img stkSeoImage
            [src]="product.image"
            [alt]="product.name"
            loading="eager"
@@ -64,8 +64,8 @@ import { SeoService, StructuredDataService, SeoImageDirective } from 'ngx-seo-to
 })
 export class ProductComponent implements OnInit {
   // Modern inject pattern
-  private readonly seoService = inject(SeoService);
-  private readonly structuredDataService = inject(StructuredDataService);
+  private readonly seoService = inject(StkSeoService);
+  private readonly structuredDataService = inject(StkStructuredDataService);
   private readonly platformId = inject(PLATFORM_ID);
 
   private readonly isBrowser = isPlatformBrowser(this.platformId);
