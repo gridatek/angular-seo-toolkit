@@ -1,13 +1,13 @@
-import { Injectable, inject, PLATFORM_ID } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { Router, NavigationEnd } from '@angular/router';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { filter, takeUntilDestroyed } from 'rxjs/operators';
-import { DestroyRef } from '@angular/core';
+import { DestroyRef, inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { MetaService } from './meta.service';
-import { StructuredDataService } from './structured-data.service';
 import { SeoConfig } from './seo.interfaces';
 import { SEO_DEFAULT_CONFIG } from './seo.tokens';
+import { StructuredDataService } from './structured-data.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root'
