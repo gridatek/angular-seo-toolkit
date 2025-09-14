@@ -1,0 +1,8 @@
+{
+  "name": "ngx-seo-toolkit",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/core": "^20.2.0"
+  },
+  "sideEffects": false
+}

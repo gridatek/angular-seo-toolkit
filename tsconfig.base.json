@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "ngx-seo-toolkit": ["packages/ngx-seo-toolkit/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

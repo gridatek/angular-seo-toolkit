@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NxWelcome } from './nx-welcome';
+import { NgxSeoToolkit } from 'ngx-seo-toolkit';
 
 @Component({
-  imports: [NxWelcome, RouterModule],
+  imports: [NgxSeoToolkit, RouterModule],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.css',
