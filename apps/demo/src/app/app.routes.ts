@@ -27,6 +27,18 @@ export const appRoutes: Route[] = [
                 keywords: ['about', 'company']
             }
         }
+    },
+    {
+        path: 'product',
+        loadComponent: () => import('./product/product').then(c => c.ProductComponent),
+        canActivate: [seoGuard],
+        data: {
+            seo: {
+                title: 'Amazing Product - Buy Online',
+                description: 'The best product ever made with cutting-edge technology and premium quality materials.',
+                keywords: ['product', 'amazing', 'buy online', 'premium quality']
+            }
+        }
     }
 
 ];
